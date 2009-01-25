@@ -6,10 +6,12 @@ typedef enum {
 	CF_S_OK,
 	CF_S_IN_USE,
 	/* CF_E_* == error result */
-	CF_E_UNKNOWN = 0x10000000
+	CF_E_UNKNOWN = 0x10000000,
+	CF_E_NOT_IMPLEMENTED,
+	CF_E_MEM
 } cf_rv_t;
 
-typedef struct cf_attr *cf_attr_t;
+typedef struct cf_attrs *cf_attrs_t;
 
 typedef int cf_attr_id_t;
 
