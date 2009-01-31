@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 const char *paths[] = {
-	"./libcf_mhash.so",
+	"./cf_mhash.so",
 	NULL
 };
 
