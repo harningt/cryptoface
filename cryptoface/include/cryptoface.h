@@ -1,14 +1,18 @@
 #ifndef CRYPTOFACE_H
 #define CRYPTOFACE_H
 
+#include <stdlib.h>
+
 typedef enum {
 	/* CF_S_* == status result */
 	CF_S_OK,
 	CF_S_IN_USE,
+	CF_S_COMPLETE,
 	/* CF_E_* == error result */
 	CF_E_UNKNOWN = 0x10000000,
 	CF_E_NOT_IMPLEMENTED,
-	CF_E_MEM
+	CF_E_MEM,
+	CF_E_INSUFFICIENT_BUFFER
 } cf_rv_t;
 
 typedef struct cf_attrs *cf_attrs_t;

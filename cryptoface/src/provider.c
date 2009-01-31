@@ -1,9 +1,12 @@
 #include "provider.h"
+#include "cryptoface_impl.h"
 
 #include <stdlib.h>
 #include <string.h>
 
 #include <assert.h>
+
+#include <dlfcn.h>
 
 struct cf_attr {
 	int id;
@@ -90,11 +93,29 @@ struct cf_named_attr_id *cf_provider_attr_get_ids(cf_provider_t provider) {
 void cf_provider_attr_destroy_ids(cf_provider_t provider, struct cf_named_attr_id *id_list) {
 }
 
-
 cf_rv_t cf_provider_init(cf_provider_t *provider, const cf_attrs_t attrs, const char *path) {
-	return CF_E_NOT_IMPLEMENTED;
+	cf_rv_t ret;
+	cf_rv_t (*init_function)(cf_provider_t*,const cf_attrs_t,const char*);
+	void *handle = dlopen(path, RTLD_NOW | RTLD_LOCAL);
+	if(!handle)
+		return CF_E_UNKNOWN;
+	init_function = dlsym(handle, "cf_init_loaded_provider");
+	if(!init_function) {
+		dlclose(handle);
+		return CF_E_UNKNOWN;
+	}
+	ret = init_function(provider, attrs, path);
+	if(CF_S_OK == ret) {
+		(*provider)->handle = handle;
+	}
+	return ret;
 }
 
-cf_rv_t cf_provider_destroy(cf_provider_t *provider) {
-	return CF_E_NOT_IMPLEMENTED;
+cf_rv_t cf_provider_destroy(cf_provider_t provider) {
+	void *handle = provider->handle;
+	cf_rv_t (*destroy_op)(cf_provider_t) = provider->provider_ops.destroy;
+	cf_rv_t ret = destroy_op(provider);
+	/* Should always close? */
+	dlclose(handle);
+	return ret;
 }

@@ -53,6 +53,6 @@ cf_rv_t cf_provider_init(cf_provider_t *provider, const cf_attrs_t attrs, const 
  * @return Status of provider destruction.
  *   CF_S_IN_USE : Provider is currently in use and will be released when those uses are eliminated.
  */
-cf_rv_t cf_provider_destroy(cf_provider_t *provider);
+cf_rv_t cf_provider_destroy(cf_provider_t provider);
 
 #endif
