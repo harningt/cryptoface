@@ -7,7 +7,7 @@ struct cf_provider_ops {
 	cf_rv_t (*destroy)(cf_provider_t);
 };
 struct cf_digest_ops {
-	cf_rv_t (*init)(cf_digest_t *,cf_provider_t,int);
+	cf_rv_t (*init)(cf_digest_t *,cf_provider_t,cf_digest_id_t);
 	/* collect information */
 	cf_rv_t (*list_begin)(cf_provider_t,void**);
 	cf_rv_t (*list_next)(cf_provider_t,void**, struct cf_digest_info*);

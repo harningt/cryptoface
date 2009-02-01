@@ -4,7 +4,7 @@
 
 #include "digest_impl.h"
 
-cf_rv_t cf_digest_init(cf_digest_t *digest, cf_provider_t provider, int id) {
+cf_rv_t cf_digest_init(cf_digest_t *digest, cf_provider_t provider, cf_digest_id_t id) {
 	if(!provider->digest_ops.init)
 		return CF_E_NOT_IMPLEMENTED;
 	return provider->digest_ops.init(digest, provider, id);
@@ -16,10 +16,6 @@ cf_rv_t cf_digest_update(cf_digest_t digest, void *data, size_t data_len) {
 
 cf_rv_t cf_digest_finish(cf_digest_t digest, void *buffer, size_t *buffer_len) {
 	return digest->ops->finish(digest, buffer, buffer_len);
-}
-
-cf_rv_t cf_digest_destroy(cf_digest_t digest) {
-	return digest->ops->destroy(digest);
 }
 
 cf_rv_t cf_digest_clone(cf_digest_t *new_digest, cf_digest_t source) {

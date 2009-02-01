@@ -4,20 +4,19 @@
 #include "cryptoface.h"
 
 typedef struct cf_digest *cf_digest_t;
+typedef intptr_t cf_digest_id_t;
 
 struct cf_digest_info {
-	int id;
+	cf_digest_id_t id;
 	const char *name;
 	size_t block_size;
 };
 
-cf_rv_t cf_digest_init(cf_digest_t *digest, cf_provider_t provider, int id);
+cf_rv_t cf_digest_init(cf_digest_t *digest, cf_provider_t provider, cf_digest_id_t id);
 
 cf_rv_t cf_digest_update(cf_digest_t digest, void *data, size_t data_len);
 
 cf_rv_t cf_digest_finish(cf_digest_t digest, void *buffer, size_t *buffer_len);
-
-cf_rv_t cf_digest_destroy(cf_digest_t digest);
 
 cf_rv_t cf_digest_clone(cf_digest_t *new_digest, cf_digest_t source);
 

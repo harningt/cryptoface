@@ -7,7 +7,6 @@
 struct cf_digest_instance_ops {
 	cf_rv_t (*update)(cf_digest_t,void*,size_t);
 	cf_rv_t (*finish)(cf_digest_t,void*,size_t*);
-	cf_rv_t (*destroy)(cf_digest_t);
 	cf_rv_t (*clone)(cf_digest_t*,cf_digest_t);
 };
 

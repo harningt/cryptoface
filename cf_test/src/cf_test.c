@@ -6,8 +6,36 @@
 
 const char *paths[] = {
 	"./cf_mhash.so",
+	"./cf_openssl.so",
 	NULL
 };
+
+static void test_digest(cf_provider_t provider, cf_digest_id_t id) {
+	cf_digest_t digest;
+	if(CF_S_OK != cf_digest_init(&digest, provider, id)) {
+		printf("FAILED TO INIT DIGEST: 0x%.8x  %i\n", id, id);
+		return;
+	}
+	char data[6] = "Hello";
+	unsigned char buffer[64];
+	size_t buffer_size = sizeof(buffer);
+	int i;
+	if(CF_S_OK != cf_digest_update(digest, data, sizeof(data))) {
+		printf("FAILED TO UPDATE DIGEST\n");
+		cf_digest_finish(digest, NULL, NULL);
+		return;
+	}
+	if(CF_S_OK != cf_digest_finish(digest, buffer, &buffer_size)) {
+		printf("FAILED TO COMPLETE DIGEST\n");
+		cf_digest_finish(digest, NULL, NULL);
+		return;
+	}
+	printf("HASH: [");
+	for(i = 0; i < buffer_size; i++) {
+		printf("%.2X", buffer[i]);
+	}
+	printf("]\n");
+}
 
 static void test_digests(cf_provider_t provider) {
 	void *iter = NULL;
@@ -19,6 +47,7 @@ static void test_digests(cf_provider_t provider) {
 		ret = cf_digest_list_next(provider, &iter, &info);
 		if(ret == CF_S_OK) {
 			printf("ALG[%i]:  [%s]  SIZE: [%i]\n", info.id, info.name, info.block_size);
+			test_digest(provider, info.id);
 		}
 	}
 	if(ret != CF_S_COMPLETE)

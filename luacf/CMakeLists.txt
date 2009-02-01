@@ -11,4 +11,4 @@ set_target_properties(luacf
 
 target_link_libraries(luacf cryptoface)
 
-include_directories(../cryptoface/include include ${LUA_INCLUDE_DIR})
+include_directories(../cryptoface/include ${LUA_INCLUDE_DIR})

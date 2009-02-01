@@ -20,8 +20,13 @@ static cf_rv_t _digest_update(cf_digest_t digest, void *data, size_t data_len) {
 static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_len) {
 	struct _mhash_digest *impl = (struct _mhash_digest*)digest;
 	size_t real_len = mhash_get_block_size(mhash_get_mhash_algo(impl->mhash));
-	if(!output) {
+	if(!output && output_len) {
 		*output_len = real_len;
+		return CF_S_OK;
+	}
+	if(!output && !output_len) {
+		mhash_deinit(impl->mhash, NULL);
+		impl->mhash = NULL;
 		return CF_S_OK;
 	}
 	if(*output_len < real_len) {
@@ -29,16 +34,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 		return CF_E_INSUFFICIENT_BUFFER;
 	}
 	*output_len = real_len;
-	MHASH tmp = mhash_cp(impl->mhash);
-	if(MHASH_FAILED == tmp)
-		return CF_E_MEM;
-	mhash_deinit(tmp, output);
-	return CF_S_OK;
-}
-
-static cf_rv_t _digest_destroy(cf_digest_t digest) {
-	struct _mhash_digest *impl = (struct _mhash_digest*)digest;
-	mhash_deinit(impl->mhash, NULL);
+	mhash_deinit(impl->mhash, output);
 	return CF_S_OK;
 }
 
@@ -58,7 +54,6 @@ static cf_rv_t _digest_clone(cf_digest_t *new_digest, cf_digest_t source) {
 static struct cf_digest_instance_ops mhash_digest_instance_ops = {
 	_digest_update,
 	_digest_finish,
-	_digest_destroy,
 	_digest_clone
 };
 
@@ -71,7 +66,7 @@ static cf_digest_t create_mhash_container(MHASH hash) {
 	return (cf_digest_t)impl;
 }
 
-static cf_rv_t _digest_init(cf_digest_t *digest, cf_provider_t provider, int id) {
+static cf_rv_t _digest_init(cf_digest_t *digest, cf_provider_t provider, cf_digest_id_t id) {
 	MHASH hash = mhash_init((hashid)id);
 	if(MHASH_FAILED == hash)
 		return CF_E_UNKNOWN;

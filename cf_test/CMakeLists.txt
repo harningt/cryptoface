@@ -13,4 +13,4 @@ set_target_properties(cf_test
 
 target_link_libraries(cf_test cryptoface)
 
-include_directories(include ../cryptoface/include)
+include_directories(../cryptoface/include)
