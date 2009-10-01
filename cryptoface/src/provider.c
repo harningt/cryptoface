@@ -6,7 +6,7 @@
 
 #include <assert.h>
 
-#include <dlfcn.h>
+#include "module_loader.h"
 
 struct cf_attr {
 	int id;
@@ -96,18 +96,22 @@ void cf_provider_attr_destroy_ids(cf_provider_t provider, struct cf_named_attr_i
 cf_rv_t cf_provider_init(cf_provider_t *provider, const cf_attrs_t attrs, const char *path) {
 	cf_rv_t ret;
 	cf_rv_t (*init_function)(cf_provider_t*,const cf_attrs_t,const char*);
-	void *handle = dlopen(path, RTLD_NOW | RTLD_LOCAL);
-	if(!handle)
-		return CF_E_UNKNOWN;
-	init_function = dlsym(handle, "cf_init_loaded_provider");
-	if(!init_function) {
-		dlclose(handle);
-		return CF_E_UNKNOWN;
-	}
+	void *handle = NULL;
+
+	ret = cfp_module_load(path, &handle);
+	if (CF_S_OK != ret)
+		goto fail;
+	ret = cfp_module_get_symbol(handle, "cf_init_loaded_provider", (void**)&init_function);
+	if (CF_S_OK != ret)
+		goto fail;
 	ret = init_function(provider, attrs, path);
-	if(CF_S_OK == ret) {
-		(*provider)->handle = handle;
-	}
+	if (CF_S_OK != ret)
+		goto fail;
+	(*provider)->handle = handle;
+	return CF_S_OK;
+fail:
+	if (handle)
+		cfp_module_unload(handle);
 	return ret;
 }
 
@@ -116,6 +120,6 @@ cf_rv_t cf_provider_destroy(cf_provider_t provider) {
 	cf_rv_t (*destroy_op)(cf_provider_t) = provider->provider_ops.destroy;
 	cf_rv_t ret = destroy_op(provider);
 	/* Should always close? */
-	dlclose(handle);
+	cfp_module_unload(handle);
 	return ret;
 }

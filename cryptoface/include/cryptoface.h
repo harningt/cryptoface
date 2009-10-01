@@ -12,7 +12,8 @@ typedef enum {
 	CF_E_UNKNOWN = 0x10000000,
 	CF_E_NOT_IMPLEMENTED,
 	CF_E_MEM,
-	CF_E_INSUFFICIENT_BUFFER
+	CF_E_INSUFFICIENT_BUFFER,
+	CF_E_INVALID_ARGUMENTS
 } cf_rv_t;
 
 typedef struct cf_attrs *cf_attrs_t;
