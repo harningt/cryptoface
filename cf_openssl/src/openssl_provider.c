@@ -1,3 +1,5 @@
+#include "openssl_provider.h"
+
 #include "cryptoface.h"
 #include "cryptoface_impl.h"
 #include "openssl_digest.h"

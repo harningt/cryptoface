@@ -1,3 +1,5 @@
+#include "mhash_provider.h"
+
 #include "cryptoface.h"
 #include "cryptoface_impl.h"
 #include "mhash_digest.h"

@@ -26,4 +26,14 @@ struct cf_named_attr_id {
 };
 typedef struct cf_provider *cf_provider_t;
 
+#ifdef WIN32
+#ifdef cryptoface_EXPORTS
+#define CF_API __declspec(dllexport)
+#else
+#define CF_API __declspec(dllimport)
+#endif
+#else
+#define CF_API __attribute__((visibility, "default"))
+#endif
+
 #endif
