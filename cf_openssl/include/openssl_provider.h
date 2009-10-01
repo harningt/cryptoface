@@ -10,9 +10,9 @@
 #define CF_OPENSSL_API __declspec(dllimport)
 #endif
 #else
-#define CF_OPENSSL_API __attribute__((visibility, "default"))
+#define CF_OPENSSL_API __attribute__((visibility("default"))) extern
 #endif
 
-CF_OPENSSL_API cf_rv_t cf_init_loaded_provider(cf_provider_t *provider, const cf_attrs_t attrs, const char *path);
+cf_rv_t CF_OPENSSL_API cf_init_loaded_provider(cf_provider_t *provider, const cf_attrs_t attrs, const char *path);
 
 #endif /* OPENSSL_PROVIDER_H */

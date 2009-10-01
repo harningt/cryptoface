@@ -33,7 +33,7 @@ typedef struct cf_provider *cf_provider_t;
 #define CF_API __declspec(dllimport)
 #endif
 #else
-#define CF_API __attribute__((visibility, "default"))
+#define CF_API __attribute__((visibility("default"))) extern
 #endif
 
 #endif
