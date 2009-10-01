@@ -16,8 +16,8 @@ SET(HEADERS
 
 add_library(cryptoface SHARED ${SOURCES} ${HEADERS})
 
-IF(LINUX OR APPLE)
+IF(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE)
 	target_link_libraries(cryptoface dl)
-ENDIF(LINUX OR APPLE)
+ENDIF(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE)
 
 include_directories(include)
