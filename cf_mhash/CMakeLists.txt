@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cf_mhash)
+project(cf_mhash C)
 
 find_package(MHASH REQUIRED)
 

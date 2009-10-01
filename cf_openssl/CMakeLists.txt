@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cf_openssl)
+project(cf_openssl C)
 
 find_package(OpenSSL REQUIRED)
 

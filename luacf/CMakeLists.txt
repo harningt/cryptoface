@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(luacf)
+project(luacf C)
 
 find_package(Lua51 REQUIRED)
 

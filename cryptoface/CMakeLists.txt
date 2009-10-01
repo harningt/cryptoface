@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cryptoface_core)
+project(cryptoface_core C)
 
 SET(SOURCES
 	src/provider.c
