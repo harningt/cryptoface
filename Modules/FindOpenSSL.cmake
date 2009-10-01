@@ -7,7 +7,7 @@ if (MSVC)
   # /MD and /MDd are the standard values - if somone wants to use
   # others, the libnames have to change here too
   # use also ssl and ssleay32 in debug as fallback for openssl < 0.9.8b
-
+  set(OPENSSL_LIBRARY_DIR ${OPENSSL_LIBRARY_DIR} CACHE PATH "OpenSSL container")
   find_library(OPENSSL_LIBSSL_DEBUG
     NAMES ssleay32MDd ssl ssleay32
     PATHS ${OPENSSL_LIBRARY_DIR}
@@ -24,17 +24,9 @@ if (MSVC)
     NAMES libeay32MD crypto libeay32
     PATHS ${OPENSSL_LIBRARY_DIR}
   )
-   
-  if (MSVC_IDE)
-    if (NOT OPENSSL_LIBSSL_DEBUG OR NOT OPENSSL_LIBSSL_RELEASE)
-      message(FATAL_ERROR
-	      "Could not find the debug and release version of libssl.")
-    endif(NOT OPENSSL_LIBSSL_DEBUG OR NOT OPENSSL_LIBSSL_RELEASE)
-    if (NOT OPENSSL_LIBCRYPTO_DEBUG OR NOT OPENSSL_LIBCRYPTO_RELEASE)
-      message(FATAL_ERROR
-	      "Could not find the debug and release version of libcrypto.")
-    endif(NOT OPENSSL_LIBCRYPTO_DEBUG OR NOT OPENSSL_LIBCRYPTO_RELEASE)
+  find_path(OPENSSL_INCLUDE_DIR openssl/opensslv.h ${OPENSSL_LIBRARY_DIR})
 
+  if (MSVC_IDE)
     set(OPENSSL_LIBSSL
       optimized ${OPENSSL_LIBSSL_RELEASE} 
       debug ${OPENSSL_LIBSSL_DEBUG})
@@ -52,10 +44,13 @@ if (MSVC)
     endif(CMAKE_BUILD_TYPE_TOLOWER MATCHES debug)
   endif(MSVC_IDE)
   mark_as_advanced(OPENSSL_LIBSSL_DEBUG   OPENSSL_LIBCRYPTO_DEBUG
-                   OPENSSL_LIBSSL_RELEASE OPENSSL_LIBCRYPTO_RELEASE)
+                   OPENSSL_LIBSSL_RELEASE OPENSSL_LIBCRYPTO_RELEASE
+                   OPENSSL_INCLUDE_DIR)
 else(MSVC)
   find_library(OPENSSL_LIBSSL NAMES ssl ssleay32)
   find_library(OPENSSL_LIBCRYPTO NAMES crypto libeay32)
+  find_path(OPENSSL_INCLUDE_DIR openssl/opensslv.h)
+  mark_as_advanced(OPENSSL_INCLUDE_DIR)
 endif(MSVC)
 
 
@@ -64,11 +59,7 @@ if (OPENSSL_LIBSSL AND OPENSSL_LIBCRYPTO)
   mark_as_advanced(OPENSSL_LIBSSL OPENSSL_LIBCRYPTO)
   mark_as_advanced(OPENSSL_LIBRARIES)
   message(STATUS "Looking for OpenSSL libraries - found")
-else (OPENSSL_LIBSSL AND OPENSSL_LIBCRYPTO)
-  if (NOT OPENSSL_LIBSSL)
-    message(FATAL_ERROR "Could not find libssl.")
-  else (NOT OPENSSL_LIBSSL)
-    message(FATAL_ERROR "Could not find libcrypto.")
-  endif (NOT OPENSSL_LIBSSL)
 endif(OPENSSL_LIBSSL AND OPENSSL_LIBCRYPTO)
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(OpenSSL DEFAULT_MSG OPENSSL_INCLUDE_DIR OPENSSL_LIBSSL OPENSSL_LIBCRYPTO)
 
