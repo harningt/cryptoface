@@ -96,9 +96,9 @@ static cf_rv_t _digest_init(cf_digest_t *digest, cf_provider_t provider, cf_dige
 	return CF_S_OK;
 }
 
-typedef EVP_MD *(*EVP_MD_CTOR)(void);
+typedef const EVP_MD *(*EVP_MD_CTOR)(void);
 
-static EVP_MD_CTOR *hash_list[] = {
+static EVP_MD_CTOR hash_list[] = {
 #ifndef OPENSSL_NO_MD2
 	EVP_md2,
 #endif
