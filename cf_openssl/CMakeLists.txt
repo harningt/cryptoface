@@ -15,8 +15,7 @@ add_library(cf_openssl MODULE ${SOURCES} ${HEADERS})
 
 set_target_properties(cf_openssl
 	PROPERTIES
-	PREFIX ""
-	LIBRARY_OUTPUT_DIRECTORY ../bin)
+	PREFIX "")
 
 target_link_libraries(cf_openssl cryptoface)
 

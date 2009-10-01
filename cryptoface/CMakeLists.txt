@@ -14,10 +14,8 @@ SET(HEADERS
 
 add_library(cryptoface SHARED ${SOURCES} ${HEADERS})
 
-set_target_properties(cryptoface
-	PROPERTIES
-	LIBRARY_OUTPUT_DIRECTORY ../bin)
-
-target_link_libraries(cryptoface dl)
+IF(LINUX OR APPLE)
+	target_link_libraries(cryptoface dl)
+ENDIF(LINUX OR APPLE)
 
 include_directories(include)

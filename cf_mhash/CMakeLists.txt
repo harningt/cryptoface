@@ -15,8 +15,7 @@ add_library(cf_mhash MODULE ${SOURCES} ${HEADERS})
 
 set_target_properties(cf_mhash
 	PROPERTIES
-	PREFIX ""
-	LIBRARY_OUTPUT_DIRECTORY ../bin)
+	PREFIX "")
 
 target_link_libraries(cf_mhash cryptoface)
 target_link_libraries(cf_mhash ${MHASH_LIBRARIES})
