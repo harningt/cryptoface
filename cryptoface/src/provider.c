@@ -28,8 +28,9 @@ struct cf_attrs {
 };
 
 cf_rv_t cf_provider_attr_init(cf_attrs_t *attr) {
+	cf_attrs_t ret;
 	assert(attr);
-	cf_attrs_t ret = calloc(1, sizeof(*ret));
+	ret = calloc(1, sizeof(*ret));
 	if(!ret)
 		return CF_E_MEM;
 	*attr = ret;
@@ -46,6 +47,7 @@ cf_rv_t cf_provider_attr_destroy(cf_attrs_t attr) {
 		free(attr->attributes);
 	}
 	free(attr);
+	return CF_S_OK;
 }
 
 cf_rv_t set_attribute(cf_attrs_t attrs, struct cf_attr value) {

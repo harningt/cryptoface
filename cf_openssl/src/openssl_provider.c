@@ -4,6 +4,7 @@
 #include "cryptoface_impl.h"
 #include "openssl_digest.h"
 
+#include <openssl/evp.h>
 #include <openssl/err.h>
 
 static cf_rv_t _openssl_destroy_provider(cf_provider_t provider);

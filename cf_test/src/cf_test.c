@@ -4,22 +4,32 @@
 
 #include <stdio.h>
 
+#ifdef WIN32
+const char *paths[] = {
+	".\\cf_mhash.dll",
+	".\\cf_openssl.dll",
+	NULL
+};
+#else
 const char *paths[] = {
 	"./cf_mhash.so",
 	"./cf_openssl.so",
 	NULL
 };
+#endif
+
 
 static void test_digest(cf_provider_t provider, cf_digest_id_t id) {
 	cf_digest_t digest;
+	char data[6] = "Hello";
+	unsigned char buffer[64];
+	size_t buffer_size = sizeof(buffer);
+	unsigned i;
+
 	if(CF_S_OK != cf_digest_init(&digest, provider, id)) {
 		printf("FAILED TO INIT DIGEST: 0x%.8x  %i\n", id, id);
 		return;
 	}
-	char data[6] = "Hello";
-	unsigned char buffer[64];
-	size_t buffer_size = sizeof(buffer);
-	int i;
 	if(CF_S_OK != cf_digest_update(digest, data, sizeof(data))) {
 		printf("FAILED TO UPDATE DIGEST\n");
 		cf_digest_finish(digest, NULL, NULL);

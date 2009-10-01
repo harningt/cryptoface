@@ -3,6 +3,7 @@
 #include "digest_impl.h"
 
 #include <openssl/evp.h>
+#include <openssl/err.h>
 
 struct _openssl_digest {
 	struct cf_digest digest;
@@ -23,6 +24,7 @@ static cf_rv_t _digest_update(cf_digest_t digest, void *data, size_t data_len) {
 static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_len) {
 	struct _openssl_digest *impl = (struct _openssl_digest*)digest;
 	size_t real_len = EVP_MD_CTX_size(&impl->ctx);
+	unsigned int digest_output_len;
 	if(!output && output_len) {
 		*output_len = real_len;
 		return CF_S_OK;
@@ -36,7 +38,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 		return CF_E_INSUFFICIENT_BUFFER;
 	}
 	*output_len = real_len;
-	unsigned int digest_output_len = *output_len;
+	digest_output_len = *output_len;
 	if(!EVP_DigestFinal(&impl->ctx, output, &digest_output_len)) {
 		EVP_MD_CTX_cleanup(&impl->ctx);
 		ERR_clear_error();
@@ -148,7 +150,7 @@ static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_
 	info->id = (cf_digest_id_t)md;
 	info->name = EVP_MD_name(md);
 	info->block_size = EVP_MD_size(md);
-	*iter = *_iter + 1;
+	*iter = (void*)(*_iter + 1);
 	return CF_S_OK;
 }
 static cf_rv_t _digest_list_end(cf_provider_t provider, void **iter) {
