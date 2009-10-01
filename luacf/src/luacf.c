@@ -1,3 +1,5 @@
+#include "luacf.h"
+
 #include "cryptoface.h"
 
 #include <lua.h>
