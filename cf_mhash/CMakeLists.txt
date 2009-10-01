@@ -19,7 +19,6 @@ set_target_properties(cf_mhash
 	LIBRARY_OUTPUT_DIRECTORY ../bin)
 
 target_link_libraries(cf_mhash cryptoface)
-#TODO ADD CMAKE DETECT
 target_link_libraries(cf_mhash ${MHASH_LIBRARIES})
 
 include_directories(include ../cryptoface/include ${MHASH_INCLUDE_DIR})
