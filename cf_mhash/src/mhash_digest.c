@@ -86,7 +86,7 @@ static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_
 	int *id = (int*)iter;
 	++*id;
 	while(*id <= mhash_count()) {
-		const char *name = mhash_get_hash_name_static(*id);
+		const char *name = (const char*)mhash_get_hash_name_static(*id);
 		if(!name) {
 			++*id;
 			continue;
