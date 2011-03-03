@@ -2,6 +2,7 @@
 #define DIGEST_H_
 
 #include "cryptoface.h"
+#include <stdint.h>
 
 typedef struct cf_digest *cf_digest_t;
 typedef intptr_t cf_digest_id_t;
