@@ -79,7 +79,7 @@ static cf_rv_t _digest_init(cf_digest_t *digest, cf_provider_t provider, cf_dige
 }
 /* collect information */
 static cf_rv_t _digest_list_begin(cf_provider_t provider, void **iter) {
-	*iter = (void*)0;
+	*iter = (void*)-1;
 	return CF_S_OK;
 }
 static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_digest_info *info) {
