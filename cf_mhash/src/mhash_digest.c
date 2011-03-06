@@ -79,12 +79,11 @@ static cf_rv_t _digest_init(cf_digest_t *digest, cf_provider_t provider, cf_dige
 }
 /* collect information */
 static cf_rv_t _digest_list_begin(cf_provider_t provider, void **iter) {
-	*iter = (void*)-1;
+	*iter = (void*)0;
 	return CF_S_OK;
 }
 static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_digest_info *info) {
 	int *id = (int*)iter;
-	++*id;
 	while(*id <= mhash_count()) {
 		const char *name = (const char*)mhash_get_hash_name_static(*id);
 		if(!name) {
@@ -94,6 +93,7 @@ static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_
 		info->id = *id;
 		info->name = name;
 		info->block_size = mhash_get_block_size(*id);
+		++*id;
 		return CF_S_OK;
 	}
 	return CF_S_COMPLETE;
