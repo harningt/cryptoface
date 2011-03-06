@@ -8,12 +8,14 @@
 const char *paths[] = {
 	".\\cf_mhash.dll",
 	".\\cf_openssl.dll",
+	".\\cf_tomcrypt.dll",
 	NULL
 };
 #else
 const char *paths[] = {
 	"./cf_mhash.so",
 	"./cf_openssl.so",
+	"./cf_tomcrypt.so",
 	NULL
 };
 #endif
