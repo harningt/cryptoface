@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #ifndef TOMCRYPT_PROVIDER_H
 #define TOMCRYPT_PROVIDER_H
 

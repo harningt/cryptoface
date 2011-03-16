@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #include "gcrypt_provider.h"
 
 #include "cryptoface.h"

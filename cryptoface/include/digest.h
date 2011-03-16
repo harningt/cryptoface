@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2008-2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #ifndef DIGEST_H_
 #define DIGEST_H_
 

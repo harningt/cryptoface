@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #ifndef GCRYPT_DIGEST_H_
 #define GCRYPT_DIGEST_H_
 

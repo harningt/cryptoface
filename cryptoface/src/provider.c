@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2008-2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #include "provider.h"
 #include "cryptoface_impl.h"
 

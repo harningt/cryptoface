@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #ifndef GCRYPT_PROVIDER_H
 #define GCRYPT_PROVIDER_H
 

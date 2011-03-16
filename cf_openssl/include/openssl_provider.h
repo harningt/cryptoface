@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2009-2011 Thomas Harning Jr.
+ * Released under the MIT license.  See included LICENSE details.
+ */
 #ifndef OPENSSL_PROVIDER_H
 #define OPENSSL_PROVIDER_H
 
