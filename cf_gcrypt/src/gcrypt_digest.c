@@ -46,6 +46,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	memcpy(output, md_output, real_len);
 	gcry_md_close(impl->handle);
 	impl->handle = NULL;
+	free(impl);
 	return CF_S_OK;
 }
 
