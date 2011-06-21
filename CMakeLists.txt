@@ -5,12 +5,14 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Modules)
 
 include(CMakeDependentOption)
 
+find_package(Botan QUIET)
 find_package(OpenSSL QUIET)
 find_package(MHASH QUIET)
 find_package(TomCrypt QUIET)
 find_package(gcrypt QUIET)
 find_package(Lua51 QUIET)
 
+CMAKE_DEPENDENT_OPTION(BUILD_CF_BOTAN "Build cf_botan interface module" ON "BOTAN_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_MHASH "Build cf_mhash interface module" ON "MHASH_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_TOMCRYPT "Build cf_tomcrypt interface module" ON "TOMCRYPT_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_GCRYPT "Build cf_gcrypt interface module" ON "GCRYPT_LIBRARIES" OFF)
@@ -27,6 +29,10 @@ IF(NOT WIN32)
 ENDIF(NOT WIN32)
 
 ADD_SUBDIRECTORY(cryptoface)
+IF(BUILD_CF_BOTAN)
+	ADD_SUBDIRECTORY(cf_botan)
+ENDIF(BUILD_CF_BOTAN)
+
 IF(BUILD_CF_MHASH)
 	ADD_SUBDIRECTORY(cf_mhash)
 ENDIF(BUILD_CF_MHASH)

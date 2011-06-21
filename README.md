@@ -42,6 +42,12 @@ Lua interface to consume cryptoface. May later be integrated more deeply if sele
 
 Requires Lua.
 
+## cf_botan
+Cryptoface provider using [Botan] as the underlying implementation.
+Currently exposes basic digest functionality.  Some hashing capabilities
+not implemented due to interface difference.  Digest cloning not
+available.
+
 ### cf_openssl
 Cryptoface provider using [OpenSSL] as the underlying implementation.
 Currently exposes basic digest functionality.
@@ -72,13 +78,15 @@ Compiler versions tested:
 
 Subproject dependencies:
 
+ * cf_botan: Botan - tested against 1.10 (Linux)
  * cf_openssl: OpenSSL - tested against 1.0.0a (Linux)
  * cf_mhash: MHash - tested against 0.9.9 (Linux and Windows)
  * cf_gcrypt: libgcrypt - tested against 1.4.6 (Linux)
  * cg_tomcrypt: LibTomcrypt - tested against 1.17 (Linux)
  * luacf: lua 5.1.x
 
-  [openssl]: http://www.openssl.org
+  [Botan]: http://botan.randombit.net/
+  [OpenSSL]: http://www.openssl.org
   [mhash]: http://mhash.sourceforge.net/
   [gnupg]: http://www.gnupg.org/
   [libgcrypt]: http://www.gnupg.org/documentation/manuals/gcrypt/

@@ -23,6 +23,10 @@ This is to protect the project and its future.
  * cf_test
    CryptoFace test code.
 
+ * cf_botan
+   Cryptoface interface to Botan - a BSD-licensed cryptographic
+   library for C++.
+
  * cf_tomcrypt
    Cryptoface interface to LibTomCrypt - a public domain
    cryptographic library.
