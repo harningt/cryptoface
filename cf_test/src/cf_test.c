@@ -30,7 +30,7 @@ const char *paths[] = {
 static void test_digest(cf_provider_t provider, cf_digest_id_t id) {
 	cf_digest_t digest;
 	char data[6] = "Hello";
-	unsigned char buffer[64];
+	unsigned char buffer[1024];
 	size_t buffer_size = sizeof(buffer);
 	unsigned i;
 
