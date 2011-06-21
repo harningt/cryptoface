@@ -12,6 +12,9 @@
 #include <dlfcn.h>
 #endif
 
+/* DEBUG */
+#include <stdio.h>
+
 #ifdef WIN32
 
 int cfp_module_load(const char *path, void **handle) {
@@ -39,6 +42,10 @@ int cfp_module_load(const char *path, void **handle) {
 	if (!handle)
 		return CF_E_INVALID_ARGUMENTS;
 	*handle = dlopen(path, RTLD_NOW | RTLD_LOCAL);
+	/* DEBUG */
+	if (!*handle) {
+		fprintf(stderr, "Error loading %s: %s\n", path, dlerror());
+	}
 	return (*handle) ? CF_S_OK : CF_E_UNKNOWN;
 }
 
