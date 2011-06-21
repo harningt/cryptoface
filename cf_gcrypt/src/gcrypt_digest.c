@@ -101,7 +101,7 @@ struct gcrypt_digest_iter {
 };
 
 static cf_rv_t _digest_list_begin(cf_provider_t provider, void **iter) {
-	struct gcrypt_digest_iter *iter_value = calloc(1, sizeof(*iter));
+	struct gcrypt_digest_iter *iter_value = calloc(1, sizeof(*iter_value));
 	gcry_error_t rv;
 	if (!iter_value) {
 		rv = CF_E_MEM;
