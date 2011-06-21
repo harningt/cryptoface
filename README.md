@@ -78,7 +78,7 @@ Compiler versions tested:
 
 Subproject dependencies:
 
- * cf_botan: Botan - tested against 1.10 (Linux)
+ * cf_botan: Botan - tested against 1.8 and 1.10 (Linux)
  * cf_openssl: OpenSSL - tested against 1.0.0a (Linux)
  * cf_mhash: MHash - tested against 0.9.9 (Linux and Windows)
  * cf_gcrypt: libgcrypt - tested against 1.4.6 (Linux)

@@ -9,6 +9,14 @@
 #include <botan/botan.h>
 using namespace Botan;
 
+/* Workaround for <= 1.8 using a const value instead of vtable function */
+#if BOTAN_VERSION_MAJOR > 1 || BOTAN_VERSION_MINOR > 8
+#define GET_HASH_OUTPUT_LENGTH(hash) (hash->output_length())
+#else
+#define GET_HASH_OUTPUT_LENGTH(hash) (hash->OUTPUT_LENGTH)
+#endif
+
+
 struct _botan_digest {
 	struct cf_digest digest;
 	HashFunction *hash;
@@ -29,7 +37,7 @@ static cf_rv_t _digest_update(cf_digest_t digest, void *data, size_t data_len) {
 
 static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_len) {
 	struct _botan_digest *impl = (struct _botan_digest*)digest;
-	size_t real_len = impl->hash->output_length();
+	size_t real_len = GET_HASH_OUTPUT_LENGTH(impl->hash);
 	unsigned int digest_output_len;
 	if(!output && output_len) {
 		*output_len = real_len;
@@ -154,7 +162,7 @@ static cf_rv_t _digest_list_next(cf_provider_t provider, void **iter, struct cf_
 	}
 	info->id = (cf_digest_id_t)md;
 	info->name = md;
-	info->block_size = hash->output_length();
+	info->block_size = GET_HASH_OUTPUT_LENGTH(hash);
 	*iter = (void*)(md_iter + 1);
 	return CF_S_OK;
 }
