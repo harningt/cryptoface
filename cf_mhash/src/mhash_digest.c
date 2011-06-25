@@ -31,6 +31,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	if(!output && !output_len) {
 		mhash_deinit(impl->mhash, NULL);
 		impl->mhash = NULL;
+		free(impl);
 		return CF_S_OK;
 	}
 	if(*output_len < real_len) {
@@ -39,6 +40,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	}
 	*output_len = real_len;
 	mhash_deinit(impl->mhash, output);
+	free(impl);
 	return CF_S_OK;
 }
 
