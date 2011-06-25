@@ -35,6 +35,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	}
 	if(!output && !output_len) {
 		EVP_MD_CTX_cleanup(&impl->ctx);
+		free(impl);
 		return CF_S_OK;
 	}
 	if(*output_len < real_len) {
@@ -46,9 +47,11 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	if(!EVP_DigestFinal(&impl->ctx, output, &digest_output_len)) {
 		EVP_MD_CTX_cleanup(&impl->ctx);
 		ERR_clear_error();
+		free(impl);
 		return CF_E_UNKNOWN;
 	}
 	*output_len = digest_output_len;
+	free(impl);
 	return CF_S_OK;
 }
 
