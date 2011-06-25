@@ -35,6 +35,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 		/* Internally cleanup since no output used */
 		impl->descriptor = NULL;
 		memset(&impl->state, 0, sizeof(impl->state));
+		free(impl);
 		return CF_S_OK;
 	}
 	if(*output_len < real_len) {
@@ -43,10 +44,12 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	}
 	*output_len = real_len;
 	if (CRYPT_OK != impl->descriptor->done(&impl->state, output)) {
+		free(impl);
 		return CF_E_UNKNOWN;
 	}
 	/* Clean up state - done has already cleaned up state */
 	impl->descriptor = NULL;
+	free(impl);
 	return CF_S_OK;
 }
 
