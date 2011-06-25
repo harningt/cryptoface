@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 2.6)
-project(cryptoface C)
+project(cryptoface C CXX)
+#C++ enabled for the few projects that consume it
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Modules)
 
 include(CMakeDependentOption)
 
+find_package(BeeCrypt QUIET)
 find_package(Botan QUIET)
 find_package(Crypto++ QUIET)
 find_package(OpenSSL QUIET)
@@ -13,6 +15,7 @@ find_package(TomCrypt QUIET)
 find_package(gcrypt QUIET)
 find_package(Lua51 QUIET)
 
+CMAKE_DEPENDENT_OPTION(BUILD_CF_BEECRYPT "Build cf_beecrypt interface module" ON "BEECRYPT_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_BOTAN "Build cf_botan interface module" ON "BOTAN_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_CRYPTOPP "Build cf_cryptopp interface module" ON "CRYPTO++_LIBRARIES" OFF)
 CMAKE_DEPENDENT_OPTION(BUILD_CF_MHASH "Build cf_mhash interface module" ON "MHASH_LIBRARIES" OFF)
@@ -31,6 +34,11 @@ IF(NOT WIN32)
 ENDIF(NOT WIN32)
 
 ADD_SUBDIRECTORY(cryptoface)
+
+IF(BUILD_CF_BEECRYPT)
+	ADD_SUBDIRECTORY(cf_beecrypt)
+ENDIF(BUILD_CF_BEECRYPT)
+
 IF(BUILD_CF_BOTAN)
 	ADD_SUBDIRECTORY(cf_botan)
 ENDIF(BUILD_CF_BOTAN)

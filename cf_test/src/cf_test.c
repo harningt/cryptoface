@@ -10,6 +10,7 @@
 
 #ifdef WIN32
 const char *paths[] = {
+	".\\cf_beecrypt.dll",
 	".\\cf_botan.dll",
 	".\\cf_cryptopp.dll",
 	".\\cf_mhash.dll",
@@ -20,6 +21,7 @@ const char *paths[] = {
 };
 #else
 const char *paths[] = {
+	"./cf_beecrypt.so",
 	"./cf_botan.so",
 	"./cf_cryptopp.so",
 	"./cf_mhash.so",

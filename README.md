@@ -42,6 +42,10 @@ Lua interface to consume cryptoface. May later be integrated more deeply if sele
 
 Requires Lua.
 
+### cf_beecrypt
+Cryptoface provider using [BeeCrypt] as the underlying implementation.
+Currently exposes basic digest functionality.
+
 ### cf_botan
 Cryptoface provider using [Botan] as the underlying implementation.
 Currently exposes basic digest functionality.  Some hashing capabilities
@@ -81,9 +85,11 @@ Compiler versions tested:
 
  * gcc 4.5.0 - MinGW - 32-bit Windows
  * gcc 4.5.1 - Gentoo Linux - 32-bit and 64-bit
+ * gcc 4.5.2 - Ubuntu Linux 11.04 - 32-bit and 64-bit
 
 Subproject dependencies:
 
+ * cf_beecrypt: BeeCrypt - tested against 4.2.1 (Linux)
  * cf_botan: Botan - tested against 1.8 and 1.10 (Linux)
  * cf_cryptopp: Crypto++ - tested against 5.6.0 (Linux)
  * cf_openssl: OpenSSL - tested against 1.0.0a (Linux)
@@ -92,6 +98,7 @@ Subproject dependencies:
  * cg_tomcrypt: LibTomcrypt - tested against 1.17 (Linux)
  * luacf: lua 5.1.x
 
+  [BeeCrypt]: http://beecrypt.sourceforge.net/
   [Botan]: http://botan.randombit.net/
   [Crypto++]: http://www.cryptopp.com/
   [OpenSSL]: http://www.openssl.org
