@@ -11,15 +11,18 @@
 struct _beecrypt_digest {
 	struct cf_digest digest;
 	hashFunction *hash;
-	hashFunctionParam *param;
+	char param[1];
 };
+
+/* Minus 1 to account for space taken by param */
+#define BEECRYPT_DIGEST_STRUCT_SIZE(paramSize) (sizeof(struct _beecrypt_digest) - 1 + (paramSize))
 
 static cf_digest_t create_beecrypt_container(hashFunction *hash);
 
 static cf_rv_t _digest_update(cf_digest_t digest, void *data, size_t data_len) {
 	struct _beecrypt_digest *impl = (struct _beecrypt_digest*)digest;
 	/* TODO: check return value */
-	impl->hash->update(impl->param, data, data_len);
+	impl->hash->update((void*)impl->param, data, data_len);
 	return CF_S_OK;
 }
 
@@ -31,8 +34,6 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 		return CF_S_OK;
 	}
 	if(!output && !output_len) {
-		free(impl->param);
-		impl->param = NULL;
 		free(impl);
 		return CF_S_OK;
 	}
@@ -42,9 +43,7 @@ static cf_rv_t _digest_finish(cf_digest_t digest, void *output, size_t *output_l
 	}
 	*output_len = real_len;
 	/* TODO: check return value */
-	impl->hash->digest(impl->param, output);
-	free(impl->param);
-	impl->param = NULL;
+	impl->hash->digest((void*)impl->param, output);
 	free(impl);
 	return CF_S_OK;
 }
@@ -68,18 +67,13 @@ static struct cf_digest_instance_ops beecrypt_digest_instance_ops = {
 };
 
 static cf_digest_t create_beecrypt_container(hashFunction *hash) {
-	struct _beecrypt_digest *impl = calloc(1, sizeof(*impl));
+	/* Allocate size for structure + additional param data at end - extra padding in */
+	struct _beecrypt_digest *impl = calloc(1, BEECRYPT_DIGEST_STRUCT_SIZE(hash->paramsize));
 	if(!impl) {
 		return NULL;
 	}
 	impl->digest.ops = &beecrypt_digest_instance_ops;
 	impl->hash = hash;
-	impl->param = (hashFunctionParam*)malloc(hash->paramsize);
-	if (!impl->param) {
-		free(impl);
-		impl = NULL;
-		return NULL;
-	}
 	/* TODO: check return value */
 	hash->reset(impl->param);
 	return (cf_digest_t)impl;
