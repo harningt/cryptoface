@@ -42,6 +42,10 @@ This is to protect the project and its future.
  * cf_mhash
    Cryptoface interface to Mhash cryptographic hash library.
 
+ * cf_nettle
+   Cryptoface interface to Nettle cryptographic library. Complicated license scheme
+   both GPL/LGPL depending on library parts used.
+
  * cf_gcrypt
    Cryptoface interface to the libgcrypt cryptographic library.
 

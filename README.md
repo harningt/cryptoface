@@ -66,6 +66,10 @@ Currently exposes basic digest functionality.
 Cryptoface provider using [Mhash] as the underlying implementation.
 Currently exposes basic digest functionality.
 
+### cf_nettle
+Cryptoface provider using [Nettle] as the underlying implementation.
+Currently exposes basic digest functionality.
+
 ### cf_gcrypt
 Cryptoface provider using [libgcrypt] (see [gnupg]) as the underlying implementation.
 Currently exposes basic digest functionality.
@@ -94,6 +98,7 @@ Subproject dependencies:
  * cf_cryptopp: Crypto++ - tested against 5.6.0 (Linux)
  * cf_openssl: OpenSSL - tested against 1.0.0a (Linux)
  * cf_mhash: MHash - tested against 0.9.9 (Linux and Windows)
+ * cf_nettle: Nettle - tested against 2.0 (Linux)
  * cf_gcrypt: libgcrypt - tested against 1.4.6 (Linux)
  * cg_tomcrypt: LibTomcrypt - tested against 1.17 (Linux)
  * luacf: lua 5.1.x
@@ -103,6 +108,7 @@ Subproject dependencies:
   [Crypto++]: http://www.cryptopp.com/
   [OpenSSL]: http://www.openssl.org
   [mhash]: http://mhash.sourceforge.net/
+  [Nettle]: http://www.lysator.liu.se/~nisse/nettle/
   [gnupg]: http://www.gnupg.org/
   [libgcrypt]: http://www.gnupg.org/documentation/manuals/gcrypt/
   [LibTomCrypt]: http://libtom.org/?page=features&whatfile=crypt
