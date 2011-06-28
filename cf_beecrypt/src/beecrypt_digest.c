@@ -120,8 +120,8 @@ static cf_rv_t _digest_list_end(cf_provider_t provider, void **iter) {
 }
 
 struct cf_digest_ops beecrypt_digest_ops = {
-		_digest_init,
-		_digest_list_begin,
-		_digest_list_next,
-		_digest_list_end
+	_digest_init,
+	_digest_list_begin,
+	_digest_list_next,
+	_digest_list_end
 };
