@@ -39,6 +39,7 @@ IF(NOT WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 ENDIF(NOT WIN32)
 
+ADD_SUBDIRECTORY(submodules/cf_memsys)
 ADD_SUBDIRECTORY(cryptoface)
 
 IF(BUILD_CF_BEECRYPT)

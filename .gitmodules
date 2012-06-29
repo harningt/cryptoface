@@ -1,0 +1,3 @@
+[submodule "submodules/cf_memsys"]
+	path = submodules/cf_memsys
+	url = https://github.com/harningt/cf_memsys.git
