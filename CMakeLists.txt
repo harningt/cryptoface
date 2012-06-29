@@ -41,6 +41,7 @@ ENDIF(NOT WIN32)
 
 ADD_SUBDIRECTORY(submodules/cf_memsys)
 ADD_SUBDIRECTORY(cryptoface)
+ADD_SUBDIRECTORY(cf_buckets)
 
 IF(BUILD_CF_BEECRYPT)
 	ADD_SUBDIRECTORY(plugins/cf_beecrypt)
