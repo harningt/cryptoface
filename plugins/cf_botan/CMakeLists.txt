@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(cf_botan CXX)
 
+find_package(cryptoface REQUIRED CONFIG PATHS ${CMAKE_MODULE_PATH})
 find_package(Botan REQUIRED)
 
 SET(SOURCES
@@ -19,8 +20,12 @@ set_target_properties(cf_botan
 	PREFIX ""
 	COMPILE_FLAGS "${BOTAN_CFLAGS}")
 
-target_link_libraries(cf_botan cryptoface)
+target_link_libraries(cf_botan ${CRYPTOFACE_LIBRARIES})
 
 target_link_libraries(cf_botan ${BOTAN_LIBRARIES})
 
-include_directories(include ../cryptoface/include ${BOTAN_INCLUDE_DIR})
+include_directories(
+    include
+    ${CRYPTOFACE_INCLUDE_DIRS}
+    ${BOTAN_INCLUDE_DIR}
+)

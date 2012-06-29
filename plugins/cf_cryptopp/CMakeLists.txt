@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(cf_cryptopp CXX)
 
+find_package(cryptoface REQUIRED CONFIG PATHS ${CMAKE_MODULE_PATH})
 find_package(Crypto++ REQUIRED)
 
 SET(SOURCES
@@ -19,8 +20,12 @@ set_target_properties(cf_cryptopp
 	PROPERTIES
 	PREFIX "")
 
-target_link_libraries(cf_cryptopp cryptoface)
+target_link_libraries(cf_cryptopp ${CRYPTOFACE_LIBRARIES})
 
 target_link_libraries(cf_cryptopp ${CRYPTO++_LIBRARIES})
 
-include_directories(include ../cryptoface/include ${CRYPTO++_INCLUDE_DIR})
+include_directories(
+    include
+    ${CRYPTOFACE_INCLUDE_DIRS}
+    ${CRYPTO++_INCLUDE_DIR}
+)

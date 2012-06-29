@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(cf_mhash C)
 
+find_package(cryptoface REQUIRED CONFIG PATHS ${CMAKE_MODULE_PATH})
 find_package(MHASH REQUIRED)
 
 SET(SOURCES
@@ -17,7 +18,12 @@ set_target_properties(cf_mhash
 	PROPERTIES
 	PREFIX "")
 
-target_link_libraries(cf_mhash cryptoface)
+target_link_libraries(cf_mhash ${CRYPTOFACE_LIBRARIES})
+
 target_link_libraries(cf_mhash ${MHASH_LIBRARIES})
 
-include_directories(include ../cryptoface/include ${MHASH_INCLUDE_DIR})
+include_directories(
+    include
+    ${CRYPTOFACE_INCLUDE_DIRS}
+    ${MHASH_INCLUDE_DIR}
+)

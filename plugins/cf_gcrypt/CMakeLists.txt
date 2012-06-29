@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(cf_gcrypt C)
 
+find_package(cryptoface REQUIRED CONFIG PATHS ${CMAKE_MODULE_PATH})
 find_package(gcrypt REQUIRED)
 
 SET(SOURCES
@@ -17,7 +18,12 @@ set_target_properties(cf_gcrypt
 	PROPERTIES
 	PREFIX "")
 
-target_link_libraries(cf_gcrypt cryptoface)
+target_link_libraries(cf_gcrypt ${CRYPTOFACE_LIBRARIES})
+
 target_link_libraries(cf_gcrypt ${GCRYPT_LIBRARIES})
 
-include_directories(include ../cryptoface/include ${GCRYPT_INCLUDE_DIR})
+include_directories(
+    include
+    ${CRYPTOFACE_INCLUDE_DIRS}
+    ${GCRYPT_INCLUDE_DIR}
+)

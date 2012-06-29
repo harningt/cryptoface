@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(cf_tomcrypt C)
 
+find_package(cryptoface REQUIRED CONFIG PATHS ${CMAKE_MODULE_PATH})
 find_package(TomCrypt REQUIRED)
 
 SET(SOURCES
@@ -18,7 +19,12 @@ set_target_properties(cf_tomcrypt
 	PROPERTIES
 	PREFIX "")
 
-target_link_libraries(cf_tomcrypt cryptoface)
+target_link_libraries(cf_tomcrypt ${CRYPTOFACE_LIBRARIES})
+
 target_link_libraries(cf_tomcrypt ${TOMCRYPT_LIBRARIES})
 
-include_directories(include ../cryptoface/include ${TOMCRYPT_INCLUDE_DIR})
+include_directories(
+    include
+    ${CRYPTOFACE_INCLUDE_DIRS}
+    ${TOMCRYPT_INCLUDE_DIR}
+)
